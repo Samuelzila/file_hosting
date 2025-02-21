@@ -545,3 +545,17 @@ function file_accessible_to_guests($path): bool {
 
     return $json->$path->guest_access;
 }
+
+/** 
+* Returns as human readable strring for the size of a file.
+*
+* @param string $path  path
+* @param int $decimals  Number of decimals to show
+* @return string
+*/
+function human_filesize($path, $decimals = 2) {
+    $bytes = filesize($path);
+    $factor = floor((strlen($bytes) - 1) / 3);
+    if ($factor > 0) $sz = 'KMGT';
+    return sprintf("%.{$decimals}f", $bytes / pow(1024, $factor)) . @$sz[$factor - 1] . 'B';
+}
